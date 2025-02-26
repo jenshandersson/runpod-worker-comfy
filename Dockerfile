@@ -33,6 +33,10 @@ RUN git lfs install \
     && git clone https://huggingface.co/Aitrepreneur/insightface \
     && mkdir -p pulid \
     && wget -O pulid/pulid_flux_v0.9.0.safetensors https://huggingface.co/Aitrepreneur/FLX/resolve/main/pulid_flux_v0.9.0.safetensors?download=true \
+    && mkdir -p facexlib \
+    && wget -O facexlib/detection_Resnet50_Final.pth https://github.com/xinntao/facexlib/releases/download/v0.1.0/detection_Resnet50_Final.pth \
+    && wget -O facexlib/parsing_parsenet.pth https://github.com/xinntao/facexlib/releases/download/v0.2.2/parsing_parsenet.pth \
+    && wget -O facexlib/parsing_bisenet.pth https://github.com/xinntao/facexlib/releases/download/v0.2.0/parsing_bisenet.pth \
     && mkdir -p custom_nodes
 
 # Clone and setup custom nodes

@@ -23,6 +23,8 @@ COMFY_HOST = "127.0.0.1:8188"
 # see https://docs.runpod.io/docs/handler-additional-controls#refresh-worker
 REFRESH_WORKER = os.environ.get("REFRESH_WORKER", "false").lower() == "true"
 
+MIN_WORKFLOW = """{"6":{"inputs":{"text":"","clip":["57",1]},"class_type":"CLIPTextEncode","_meta":{"title":"CLIP Text Encode (Positive Prompt)"}},"8":{"inputs":{"samples":["13",0],"vae":["10",0]},"class_type":"VAEDecode","_meta":{"title":"VAE Decode"}},"9":{"inputs":{"filename_prefix":"ComfyUI","images":["8",0]},"class_type":"SaveImage","_meta":{"title":"Save Image"}},"10":{"inputs":{"vae_name":"ae.safetensors"},"class_type":"VAELoader","_meta":{"title":"Load VAE"}},"11":{"inputs":{"clip_name1":"t5xxl_fp8_e4m3fn.safetensors","clip_name2":"clip_l.safetensors","type":"flux","device":"default"},"class_type":"DualCLIPLoader","_meta":{"title":"DualCLIPLoader"}},"12":{"inputs":{"unet_name":"flux1-dev-fp8.safetensors","weight_dtype":"default"},"class_type":"UNETLoader","_meta":{"title":"Load Diffusion Model"}},"13":{"inputs":{"noise":["25",0],"guider":["22",0],"sampler":["16",0],"sigmas":["17",0],"latent_image":["27",0]},"class_type":"SamplerCustomAdvanced","_meta":{"title":"SamplerCustomAdvanced"}},"16":{"inputs":{"sampler_name":"euler"},"class_type":"KSamplerSelect","_meta":{"title":"KSamplerSelect"}},"17":{"inputs":{"scheduler":"simple","steps":20,"denoise":1,"model":["39",0]},"class_type":"BasicScheduler","_meta":{"title":"BasicScheduler"}},"22":{"inputs":{"model":["39",0],"conditioning":["26",0]},"class_type":"BasicGuider","_meta":{"title":"BasicGuider"}},"25":{"inputs":{"noise_seed":882489827747891},"class_type":"RandomNoise","_meta":{"title":"RandomNoise"}},"26":{"inputs":{"guidance":3.5,"conditioning":["6",0]},"class_type":"FluxGuidance","_meta":{"title":"CFG"}},"27":{"inputs":{"width":16,"height":16,"batch_size":1},"class_type":"EmptySD3LatentImage","_meta":{"title":"EmptySD3LatentImage"}},"39":{"inputs":{"weight":1,"start_at":0,"end_at":1,"fusion":"mean","fusion_weight_max":1,"fusion_weight_min":0,"train_step":1000,"use_gray":true,"model":["57",0],"pulid_flux":["40",0],"eva_clip":["41",0],"face_analysis":["42",0],"image":["58",0]},"class_type":"ApplyPulidFlux","_meta":{"title":"Apply PuLID Flux"}},"40":{"inputs":{"pulid_file":"pulid_flux_v0.9.0.safetensors"},"class_type":"PulidFluxModelLoader","_meta":{"title":"Load PuLID Flux Model"}},"41":{"inputs":{},"class_type":"PulidFluxEvaClipLoader","_meta":{"title":"Load Eva Clip (PuLID Flux)"}},"42":{"inputs":{"provider":"CPU"},"class_type":"PulidFluxInsightFaceLoader","_meta":{"title":"Load InsightFace (PuLID Flux)"}},"57":{"inputs":{"PowerLoraLoaderHeaderWidget":{"type":"PowerLoraLoaderHeaderWidget"},"lora_1":{"on":true,"lora":"7lu5OFIisO2XIu_HglD5v_pytorch_lora_weights.safetensors","strength":1},"➕ Add Lora":"","model":["12",0],"clip":["11",0]},"class_type":"Power Lora Loader (rgthree)","_meta":{"title":"Power Lora Loader (rgthree)"}},"58":{"inputs":{"data":"iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII="},"class_type":"LoadImageFromBase64","_meta":{"title":"Load Image From Base64"}}}"""
+
 
 def validate_input(job_input):
     """
@@ -347,4 +349,15 @@ def handler(job):
 
 # Start the handler only if this script is run directly
 if __name__ == "__main__":
+    try:
+        print("setup - starting handler")
+        handler({
+            "id": "fake-workflow-id",
+            "input": {
+                "workflow": json.loads(MIN_WORKFLOW)
+            }
+        })
+        print("setup - handler finished")
+    except Exception as e:
+        print(f"setup - error: {str(e)}")
     runpod.serverless.start({"handler": handler})
