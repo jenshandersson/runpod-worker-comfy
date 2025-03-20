@@ -33,6 +33,7 @@ RUN git lfs install \
     && git clone https://huggingface.co/Aitrepreneur/insightface \
     && mkdir -p pulid \
     && wget -O pulid/pulid_flux_v0.9.0.safetensors https://huggingface.co/Aitrepreneur/FLX/resolve/main/pulid_flux_v0.9.0.safetensors?download=true \
+    && wget -O pulid/pulid_flux_v0.9.1.safetensors https://huggingface.co/guozinan/PuLID/resolve/main/pulid_flux_v0.9.1.safetensors?download=true \
     && mkdir -p facexlib \
     && wget -O facexlib/detection_Resnet50_Final.pth https://github.com/xinntao/facexlib/releases/download/v0.1.0/detection_Resnet50_Final.pth \
     && wget -O facexlib/parsing_parsenet.pth https://github.com/xinntao/facexlib/releases/download/v0.2.2/parsing_parsenet.pth \
@@ -45,6 +46,19 @@ RUN cd /comfyui/custom_nodes && \
     https://github.com/giriss/comfy-image-saver.git \
     https://github.com/lldacing/ComfyUI_PuLID_Flux_ll.git \
     https://github.com/rgthree/rgthree-comfy.git \
+    https://github.com/Chaoses-Ib/ComfyUI_Ib_CustomNodes.git \
+    https://github.com/Acly/comfyui-tooling-nodes.git \
+    https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes.git \
+    https://github.com/kaibioinfo/ComfyUI_AdvancedRefluxControl.git \
+    https://github.com/sipie800/ComfyUI-PuLID-Flux-Enhanced.git \
+    https://github.com/cubiq/ComfyUI_essentials.git \
+    https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch.git \
+    https://github.com/Fannovel16/ComfyUI-Video-Matting.git \
+    https://github.com/chflame163/ComfyUI_LayerStyle.git \
+    https://github.com/kijai/ComfyUI-KJNodes.git \
+    https://github.com/WASasquatch/was-node-suite-comfyui.git \
+    https://github.com/ltdrdata/ComfyUI-Manager.git \
+    https://github.com/welltop-cn/ComfyUI-TeaCache.git \
     https://github.com/glowcone/comfyui-base64-to-image.git; \
     do \
         repo_dir=$(basename "$repo" .git); \
