@@ -10,6 +10,12 @@ runpod_worker_comfy:
   upscale_models: models/upscale_models/
   vae: models/vae/
   unet: models/unet/
+  pulid: models/pulid/
+  style_models: models/style_models/
+  facexlib: models/facexlib/
+  facerestore_models: models/facerestore_models/
+  LLM: models/LLM/
+  ultralytics: models/ultralytics/
   diffusion_models: |
     models/diffusion_models
     models/unet

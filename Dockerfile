@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir \
     comfy-cli runpod requests numpy insightface==0.7.3
 
 # Install ComfyUI
-RUN /usr/bin/yes | comfy --workspace /comfyui install \
+RUN /usr/bin/yes | comfy --workspace /comfyui install --skip-manager \
     --cuda-version 11.8 --nvidia --version 0.3.12
 
 WORKDIR /comfyui
@@ -32,7 +32,6 @@ RUN git lfs install \
     && cd /comfyui/models \
     && git clone https://huggingface.co/Aitrepreneur/insightface \
     && mkdir -p pulid \
-    && wget -O pulid/pulid_flux_v0.9.0.safetensors https://huggingface.co/Aitrepreneur/FLX/resolve/main/pulid_flux_v0.9.0.safetensors?download=true \
     && wget -O pulid/pulid_flux_v0.9.1.safetensors https://huggingface.co/guozinan/PuLID/resolve/main/pulid_flux_v0.9.1.safetensors?download=true \
     && mkdir -p facexlib \
     && wget -O facexlib/detection_Resnet50_Final.pth https://github.com/xinntao/facexlib/releases/download/v0.1.0/detection_Resnet50_Final.pth \
@@ -57,9 +56,15 @@ RUN cd /comfyui/custom_nodes && \
     https://github.com/chflame163/ComfyUI_LayerStyle.git \
     https://github.com/kijai/ComfyUI-KJNodes.git \
     https://github.com/WASasquatch/was-node-suite-comfyui.git \
-    https://github.com/ltdrdata/ComfyUI-Manager.git \
     https://github.com/welltop-cn/ComfyUI-TeaCache.git \
-    https://github.com/glowcone/comfyui-base64-to-image.git; \
+    https://github.com/Fannovel16/comfyui_controlnet_aux.git \
+    https://github.com/yolain/ComfyUI-Easy-Use.git \
+    https://github.com/ltdrdata/ComfyUI-Impact-Pack.git \
+    https://github.com/ltdrdata/ComfyUI-Impact-Subpack.git \
+    https://github.com/badayvedat/ComfyUI-fal-Connector.git \
+    https://github.com/tsogzark/ComfyUI-load-image-from-url.git \
+    https://github.com/glowcone/comfyui-base64-to-image.git \
+    https://github.com/rookiepsi/comfyui-extended.git; \
     do \
         repo_dir=$(basename "$repo" .git); \
         git clone "$repo" "$repo_dir"; \
